@@ -728,6 +728,7 @@ function _private.add_window_decorations(c)
                     widget = wcontainer_margin,
                     right = _private.titlebar_margin_right,
                 },
+                expand = "none",
                 layout = wlayout_align_horizontal,
             },
             widget = wcontainer_background,
