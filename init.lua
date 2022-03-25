@@ -168,6 +168,7 @@ _private.maximize_color = "#4CBB17"
 _private.floating_color = "#f6a2ed"
 _private.ontop_color = "#f6a2ed"
 _private.sticky_color = "#f6a2ed"
+_private.expand = "none"
 -- ------------------------------------------------------------
 
 -- => Saving and loading of color rules
@@ -746,7 +747,7 @@ function _private.add_window_decorations(c)
                     widget = wcontainer_margin,
                     right = _private.titlebar_margin_right,
                 },
-                -- expand = "none",
+                expand = _private.expand,
                 layout = wlayout_align_horizontal,
             },
             widget = wcontainer_background,
