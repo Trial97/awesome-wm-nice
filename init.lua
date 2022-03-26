@@ -35,6 +35,7 @@ local wcontainer_place = wcontainer.place
 -- Gears
 local gsurface = require("gears.surface")
 local gtimer = require("gears.timer")
+local gstring = require("gears.string")
 local gtimer_weak_start_new = gtimer.weak_start_new
 -- ------------------------------------------------------------
 
@@ -488,23 +489,6 @@ local function get_titlebar_mouse_bindings(c)
     return buttons
 end
 
-
-function unescape(str)
-  return  str:gsub('([%z\1-\127\194-\244][\128-\191]*)',
-  function(char)
-      local charbyte = char:byte()
-      if (string.len(char) == 1) then
-          if charbyte == 32 then -- Space char
-              return ' '
-          end
-          return '&#'.. charbyte ..';'
-      else
-          return char
-      end
-  end)
-end
-
-
 -- Returns a titlebar widget for the given client
 local function create_titlebar_title(c)
     local client_color = c._nice_base_color
@@ -521,7 +505,7 @@ local function create_titlebar_title(c)
         local text_color = is_contrast_acceptable(
                                title_color_light, client_color) and
                                title_color_light or title_color_dark
-        local title = unescape(c.name)
+        local title = gstring.xml_escape(c.name)
         title_widget.markup =
             ("<span foreground='%s' font='%s'>%s</span>"):format(
                 text_color, _private.titlebar_font, title)
