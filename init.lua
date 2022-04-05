@@ -35,6 +35,7 @@ local wcontainer_place = wcontainer.place
 -- Gears
 local gsurface = require("gears.surface")
 local gtimer = require("gears.timer")
+local gstring = require("gears.string")
 local gtimer_weak_start_new = gtimer.weak_start_new
 -- ------------------------------------------------------------
 
@@ -168,6 +169,7 @@ _private.maximize_color = "#4CBB17"
 _private.floating_color = "#f6a2ed"
 _private.ontop_color = "#f6a2ed"
 _private.sticky_color = "#f6a2ed"
+_private.expand = "none"
 -- ------------------------------------------------------------
 
 -- => Saving and loading of color rules
@@ -503,9 +505,10 @@ local function create_titlebar_title(c)
         local text_color = is_contrast_acceptable(
                                title_color_light, client_color) and
                                title_color_light or title_color_dark
+        local title = gstring.xml_escape(c.name)
         title_widget.markup =
             ("<span foreground='%s' font='%s'>%s</span>"):format(
-                text_color, _private.titlebar_font, c.name)
+                text_color, _private.titlebar_font, title)
     end
     c:connect_signal("property::name", update)
     c:connect_signal(
@@ -728,7 +731,7 @@ function _private.add_window_decorations(c)
                     widget = wcontainer_margin,
                     right = _private.titlebar_margin_right,
                 },
-                expand = "none",
+                expand = _private.expand,
                 layout = wlayout_align_horizontal,
             },
             widget = wcontainer_background,
